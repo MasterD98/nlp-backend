@@ -1,0 +1,25 @@
+from flask import Flask, request, jsonify
+from inference import Translator
+
+app = Flask(__name__)
+translator = Translator(weight_dir='weights')  # Initialize translator
+
+@app.route('/translate', methods=['POST'])
+def translate():
+    data = request.get_json()
+    
+    if 'text' not in data or not data['text'].strip():
+        return jsonify({'error': 'Missing or empty "text" parameter'}), 400
+    
+    try:
+        translation = translator.translate(data['text'])
+
+        return jsonify({
+            'sinhala': data['text'],
+            'english': translation
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run()
