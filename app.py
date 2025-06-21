@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
 from inference import Translator
 from simpletransformers.t5 import T5Model
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 translator = Translator(weight_dir='weights')  # Initialize translator
-
-
 model = T5Model("mt5", "thilina/mt5-sinhalese-english")
-print(model.predict(["Let's translate!"]))
 
 @app.route('/translate/<model_name>', methods=['POST'])
 def translate(model_name=="default"):
