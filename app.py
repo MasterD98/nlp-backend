@@ -9,7 +9,7 @@ translator = Translator(weight_dir='weights')  # Initialize translator
 model = T5Model("mt5", "thilina/mt5-sinhalese-english")
 
 @app.route('/translate/<model_name>', methods=['POST'])
-def translate(model_name=="default"):
+def translate(model_name="default"):
     data = request.get_json()
     
     if 'text' not in data or not data['text'].strip():
