@@ -3,3 +3,4 @@ tensorflow==2.18.0
 flask==2.3.3
 simpletransformers
 flask-cors
+torch
