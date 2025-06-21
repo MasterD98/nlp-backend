@@ -33,9 +33,9 @@ class Encoder(tf.keras.Model):
     def initialize_hidden_state(self):
         return tf.zeros((self.batch_sz, self.enc_units))
 
-class BahdanauAttention(tf.keras.layers.Layer):
+class Attention(tf.keras.layers.Layer):
     def __init__(self, units):
-        super(BahdanauAttention, self).__init__()
+        super(Attention, self).__init__()
         self.W1 = tf.keras.layers.Dense(units)
         self.W2 = tf.keras.layers.Dense(units)
         self.V = tf.keras.layers.Dense(1)
@@ -60,7 +60,7 @@ class Decoder(tf.keras.Model):
                                        return_state=True,
                                        recurrent_initializer='glorot_uniform')
         self.fc = tf.keras.layers.Dense(vocab_size)
-        self.attention = BahdanauAttention(self.dec_units)
+        self.attention = Attention(self.dec_units)
 
     def call(self, x, hidden, enc_output):
         context_vector, attention_weights = self.attention(hidden, enc_output)
